@@ -49,15 +49,36 @@ function seedAsManifestations(): Manifestation[] {
   }));
 }
 
-function countsFrom(rows: { state_uf: string }[]) {
+function todayInBrazil(): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+function dateKey(value: string | null | undefined): string | null {
+  if (!value) return null;
+  return value.slice(0, 10);
+}
+
+function summarize(
+  rows: { state_uf: string; occurred_at?: string | null }[],
+  today: string,
+) {
   const counts = new Map<string, number>();
+  const todayUfs = new Set<string>();
   for (const row of rows) {
     counts.set(row.state_uf, (counts.get(row.state_uf) ?? 0) + 1);
+    if (dateKey(row.occurred_at) === today) todayUfs.add(row.state_uf);
   }
-  return counts;
+  return { counts, todayUfs };
 }
 
 export async function getStatesWithCounts(): Promise<StateWithCount[]> {
+  const today = todayInBrazil();
+
   try {
     const { data: states, error: statesError } = await supabase
       .from("ml_states")
@@ -68,21 +89,23 @@ export async function getStatesWithCounts(): Promise<StateWithCount[]> {
 
     const { data: manifestations, error: manError } = await supabase
       .from("ml_manifestations")
-      .select("state_uf");
+      .select("state_uf, occurred_at");
 
     if (manError) throw manError;
     if (!manifestations || manifestations.length === 0) throw new Error("empty");
 
-    const counts = countsFrom(manifestations);
+    const { counts, todayUfs } = summarize(manifestations, today);
     return (states ?? FALLBACK_STATES).map((s) => ({
       ...s,
       count: counts.get(s.uf) ?? 0,
+      hasToday: todayUfs.has(s.uf),
     }));
   } catch {
-    const counts = countsFrom(seedManifestations);
+    const { counts, todayUfs } = summarize(seedManifestations, today);
     return FALLBACK_STATES.map((s) => ({
       ...s,
       count: counts.get(s.uf) ?? 0,
+      hasToday: todayUfs.has(s.uf),
     }));
   }
 }

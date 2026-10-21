@@ -21,4 +21,6 @@ export type Manifestation = {
 
 export type StateWithCount = StateRow & {
   count: number;
+  /** True when there is at least one manifestation dated "today" (America/Sao_Paulo). */
+  hasToday: boolean;
 };

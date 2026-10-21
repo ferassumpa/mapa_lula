@@ -104,7 +104,7 @@ export function BrazilMap({ states }: Props) {
             >
               <foreignObject x={-18} y={-18} width={36} height={36}>
                 <div className="flex h-full w-full items-center justify-center">
-                  <LulaFace size={32} />
+                  <LulaFace size={32} blink={Boolean(state?.hasToday)} />
                 </div>
               </foreignObject>
               <g transform="translate(20, -10)">

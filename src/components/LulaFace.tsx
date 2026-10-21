@@ -1,4 +1,10 @@
-export function LulaFace({ size = 28 }: { size?: number }) {
+export function LulaFace({
+  size = 28,
+  blink = false,
+}: {
+  size?: number;
+  blink?: boolean;
+}) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -7,7 +13,7 @@ export function LulaFace({ size = 28 }: { size?: number }) {
       width={size}
       height={size}
       aria-hidden
-      className="lula-blink object-cover drop-shadow-md"
+      className={`object-cover drop-shadow-md${blink ? " lula-blink" : ""}`}
       style={{
         width: size,
         height: size,
