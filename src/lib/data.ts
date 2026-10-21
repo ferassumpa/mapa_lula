@@ -1,3 +1,4 @@
+import seedManifestations from "@/data/seed-manifestations.json";
 import { supabase } from "./supabase";
 import type { Manifestation, StateRow, StateWithCount } from "./types";
 
@@ -31,6 +32,28 @@ const FALLBACK_STATES: StateRow[] = [
   { uf: "TO", name: "Tocantins", slug: "tocantins" },
 ];
 
+function seedAsManifestations(): Manifestation[] {
+  return seedManifestations.map((m, i) => ({
+    id: `seed-${i}`,
+    state_uf: m.state_uf,
+    title: m.title,
+    description: m.description,
+    youtube_id: m.youtube_id,
+    city: m.city,
+    occurred_at: m.occurred_at,
+    source_url: m.source_url,
+    created_at: new Date().toISOString(),
+  }));
+}
+
+function countsFrom(rows: { state_uf: string }[]) {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    counts.set(row.state_uf, (counts.get(row.state_uf) ?? 0) + 1);
+  }
+  return counts;
+}
+
 export async function getStatesWithCounts(): Promise<StateWithCount[]> {
   try {
     const { data: states, error: statesError } = await supabase
@@ -46,17 +69,17 @@ export async function getStatesWithCounts(): Promise<StateWithCount[]> {
 
     if (manError) throw manError;
 
-    const counts = new Map<string, number>();
-    for (const row of manifestations ?? []) {
-      counts.set(row.state_uf, (counts.get(row.state_uf) ?? 0) + 1);
-    }
-
+    const counts = countsFrom(manifestations ?? []);
     return (states ?? FALLBACK_STATES).map((s) => ({
       ...s,
       count: counts.get(s.uf) ?? 0,
     }));
   } catch {
-    return FALLBACK_STATES.map((s) => ({ ...s, count: 0 }));
+    const counts = countsFrom(seedManifestations);
+    return FALLBACK_STATES.map((s) => ({
+      ...s,
+      count: counts.get(s.uf) ?? 0,
+    }));
   }
 }
 
@@ -86,8 +109,12 @@ export async function getManifestationsByUf(uf: string): Promise<Manifestation[]
       .order("occurred_at", { ascending: false });
 
     if (error) throw error;
-    return data ?? [];
+    if (data && data.length > 0) return data;
   } catch {
-    return [];
+    /* fallback below */
   }
+
+  return seedAsManifestations()
+    .filter((m) => m.state_uf === uf.toUpperCase())
+    .sort((a, b) => (b.occurred_at ?? "").localeCompare(a.occurred_at ?? ""));
 }

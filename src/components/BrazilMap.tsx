@@ -69,8 +69,7 @@ export function BrazilMap({ states }: Props) {
               }
             >
               <title>
-                {state?.name ?? loc.name}
-                {hasEvents ? ` — ${state!.count} manifestações` : ""}
+                {`${state?.name ?? loc.name}${hasEvents ? ` — ${state!.count} manifestações` : ""}`}
               </title>
             </path>
           );
