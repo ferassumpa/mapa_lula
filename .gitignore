@@ -43,3 +43,11 @@ next-env.d.ts
 AGENTS.md
 CLAUDE.md
 
+# generated SQL batches
+/scripts/batches/
+/scripts/seed-manifestations.sql
+
+
+scripts/batches/
+scripts/seed-manifestations.sql
+
