@@ -23,13 +23,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="pt-BR" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#fff5f5] text-red-950" style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}>
         <header className="border-b border-red-900/10 bg-white/70 backdrop-blur">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-8">
+          <div className="mx-auto flex max-w-5xl items-center px-4 py-3 sm:px-8">
             <a href="/" className="font-display text-lg font-bold text-red-900">
               Mapa Lula
             </a>
-            <span className="text-xs font-medium uppercase tracking-wider text-red-800/70">
-              YouTube · Supabase · Vercel
-            </span>
           </div>
         </header>
         {children}

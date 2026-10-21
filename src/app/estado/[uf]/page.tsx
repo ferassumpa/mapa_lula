@@ -12,14 +12,13 @@ type Props = {
 export default async function EstadoPage({ params }: Props) {
   const { uf: raw } = await params;
   const uf = raw.toUpperCase();
-  const state = await getStateByUf(uf);
-  if (!state) notFound();
 
-  const videos = await getManifestationsByUf(uf);
+  const [state, videos] = await Promise.all([getStateByUf(uf), getManifestationsByUf(uf)]);
+  if (!state) notFound();
 
   return (
     <main className="flex flex-1 flex-col">
-      <section className="relative overflow-hidden px-4 pb-16 pt-8 sm:px-8">
+      <section className="relative px-4 pb-16 pt-8 sm:px-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#fecaca_0%,_transparent_50%),linear-gradient(180deg,#fff5f5_0%,#ffe4e6_100%)]" />
 
         <div className="relative mx-auto max-w-5xl">
@@ -36,7 +35,7 @@ export default async function EstadoPage({ params }: Props) {
           <p className="mt-2 text-red-900/75">
             {videos.length === 0
               ? "Nenhuma manifestação registrada neste estado ainda."
-              : `${videos.length} manifestaç${videos.length === 1 ? "ão" : "ões"} a favor do Lula (vídeos do YouTube quando disponíveis)`}
+              : `${videos.length} manifestaç${videos.length === 1 ? "ão" : "ões"} a favor do Lula (toque no vídeo para reproduzir)`}
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">

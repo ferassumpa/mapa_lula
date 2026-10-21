@@ -10,9 +10,9 @@ export default async function HomePage() {
 
   return (
     <main className="flex flex-1 flex-col">
-      <section className="relative overflow-hidden px-4 pb-10 pt-10 sm:px-8">
+      <section className="relative overflow-x-clip px-2 pb-10 pt-10 sm:overflow-visible sm:px-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#fecaca_0%,_transparent_55%),linear-gradient(180deg,#fff5f5_0%,#ffe4e6_45%,#fff1f2_100%)]" />
-        <div className="relative mx-auto max-w-5xl text-center">
+        <div className="relative mx-auto max-w-5xl px-2 text-center sm:px-0">
           <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-red-800/80">
             Brasil · último mês
           </p>
@@ -28,7 +28,7 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div className="relative mx-auto mt-8 max-w-4xl">
+        <div className="relative mx-auto mt-8 w-full max-w-5xl">
           <BrazilMap states={states} />
         </div>
 

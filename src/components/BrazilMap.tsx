@@ -12,6 +12,14 @@ type Props = {
 
 type Point = { x: number; y: number };
 
+/** Extra room so right-side badges (NE coast) are not clipped */
+const PAD = { left: 28, top: 24, right: 72, bottom: 36 };
+
+function expandedViewBox(raw: string) {
+  const [minX, minY, width, height] = raw.split(/\s+/).map(Number);
+  return `${minX - PAD.left} ${minY - PAD.top} ${width + PAD.left + PAD.right} ${height + PAD.top + PAD.bottom}`;
+}
+
 export function BrazilMap({ states }: Props) {
   const router = useRouter();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -35,18 +43,23 @@ export function BrazilMap({ states }: Props) {
       next[loc.id] = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
     }
     setCentroids(next);
-  }, []);
+
+    for (const s of states) {
+      if (s.count > 0) router.prefetch(`/estado/${s.uf}`);
+    }
+  }, [router, states]);
 
   const go = (uf: string) => router.push(`/estado/${uf.toUpperCase()}`);
 
   return (
-    <div className="relative mx-auto w-full max-w-3xl">
+    <div className="relative mx-auto w-full max-w-4xl px-2 sm:px-6">
       <svg
         ref={svgRef}
-        viewBox={brazilMap.viewBox}
+        viewBox={expandedViewBox(brazilMap.viewBox)}
         role="img"
         aria-label="Mapa do Brasil com manifestações por estado"
-        className="h-auto w-full drop-shadow-sm"
+        className="h-auto w-full overflow-visible drop-shadow-sm"
+        style={{ overflow: "visible" }}
       >
         {brazilMap.locations.map((loc) => {
           const state = byUf.get(loc.id);

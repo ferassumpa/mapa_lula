@@ -108,7 +108,9 @@ export async function getManifestationsByUf(uf: string): Promise<Manifestation[]
   try {
     const { data, error } = await supabase
       .from("ml_manifestations")
-      .select("*")
+      .select(
+        "id, state_uf, title, description, youtube_id, city, occurred_at, source_url, created_at, external_id, tipo, venue",
+      )
       .eq("state_uf", uf.toUpperCase())
       .order("occurred_at", { ascending: false });
 
