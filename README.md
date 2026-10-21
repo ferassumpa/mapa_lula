@@ -17,15 +17,20 @@ npm install
 npm run dev
 ```
 
-## Varredura YouTube (opcional)
+## Sincronizar agenda (último mês)
 
-Com `YOUTUBE_API_KEY` e `SUPABASE_SERVICE_ROLE_KEY` no `.env.local`:
+Fonte principal: dados abertos [Esquerda nas Ruas](https://esquerda-nas-ruas.com.br/dados/) (`atos.json`, CC BY 4.0).
 
 ```bash
+# regenera seed local a partir de scripts/atos.json
+node scripts/build-seed.mjs
+
+# importa no Supabase (precisa policy/service role)
+node scripts/import-seed.mjs
+
+# ou via API (SUPABASE_SERVICE_ROLE_KEY + SCAN_SECRET)
 curl -X POST http://localhost:3000/api/scan -H "x-scan-secret: SEU_SCAN_SECRET"
 ```
-
-Busca vídeos do último mês por estado e grava no Supabase (sem duplicar).
 
 ## Deploy Vercel
 

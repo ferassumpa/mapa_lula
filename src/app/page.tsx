@@ -24,7 +24,7 @@ export default async function HomePage() {
             contador ao lado.
           </p>
           <p className="mt-4 text-sm font-medium text-red-800">
-            {total} vídeos em {withEvents} estados
+            {total} manifestações em {withEvents} estados (último mês)
           </p>
         </div>
 
@@ -33,8 +33,8 @@ export default async function HomePage() {
         </div>
 
         <p className="relative mx-auto mt-6 max-w-2xl text-center text-xs text-red-900/60">
-          Clique em um estado para ver os vídeos do YouTube. Dados iniciais populados por varredura
-          pública do último mês.
+          Clique em um estado para ver os atos. Fontes: agenda aberta Esquerda nas Ruas / Comitê
+          Popular / Hoje tem 13 (CC BY 4.0), com embeds do YouTube quando disponíveis.
         </p>
       </section>
     </main>

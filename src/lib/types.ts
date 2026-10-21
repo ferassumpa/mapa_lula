@@ -9,11 +9,14 @@ export type Manifestation = {
   state_uf: string;
   title: string;
   description: string | null;
-  youtube_id: string;
+  youtube_id: string | null;
   city: string | null;
   occurred_at: string | null;
   source_url: string | null;
   created_at: string;
+  external_id?: string | null;
+  tipo?: string | null;
+  venue?: string | null;
 };
 
 export type StateWithCount = StateRow & {

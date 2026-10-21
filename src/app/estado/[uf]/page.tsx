@@ -36,7 +36,7 @@ export default async function EstadoPage({ params }: Props) {
           <p className="mt-2 text-red-900/75">
             {videos.length === 0
               ? "Nenhuma manifestação registrada neste estado ainda."
-              : `${videos.length} vídeo${videos.length === 1 ? "" : "s"} de manifestações a favor do Lula`}
+              : `${videos.length} manifestaç${videos.length === 1 ? "ão" : "ões"} a favor do Lula (vídeos do YouTube quando disponíveis)`}
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">

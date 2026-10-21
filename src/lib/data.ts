@@ -43,6 +43,9 @@ function seedAsManifestations(): Manifestation[] {
     occurred_at: m.occurred_at,
     source_url: m.source_url,
     created_at: new Date().toISOString(),
+    external_id: m.external_id,
+    tipo: m.tipo,
+    venue: m.venue,
   }));
 }
 
@@ -68,8 +71,9 @@ export async function getStatesWithCounts(): Promise<StateWithCount[]> {
       .select("state_uf");
 
     if (manError) throw manError;
+    if (!manifestations || manifestations.length === 0) throw new Error("empty");
 
-    const counts = countsFrom(manifestations ?? []);
+    const counts = countsFrom(manifestations);
     return (states ?? FALLBACK_STATES).map((s) => ({
       ...s,
       count: counts.get(s.uf) ?? 0,
