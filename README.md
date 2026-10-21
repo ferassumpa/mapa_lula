@@ -33,4 +33,4 @@ Busca vídeos do último mês por estado e grava no Supabase (sem duplicar).
 2. Configure as env vars do `.env.example`
 3. Deploy
 
-> Nota: o projeto Supabase `mapa-lula` não pôde ser criado (limite de 2 projetos free). As tabelas `ml_*` foram criadas no projeto TravelApp existente.
+Supabase: projeto **mapa_lula** (`ufmaymqyzrokabcrrpnj`).
