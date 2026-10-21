@@ -55,14 +55,29 @@ export function VideoCard({ item }: { item: Manifestation }) {
           )}
         </div>
       ) : (
-        <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-red-100 to-red-200 px-6 text-center">
-          <div>
-            <p className="font-display text-lg font-semibold text-red-900">
+        <div className="relative aspect-video w-full overflow-hidden bg-[#7f1d1d]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/lula.png"
+            alt=""
+            className="absolute inset-0 h-full w-full scale-110 object-cover object-[center_20%] opacity-35"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#450a0a]/95 via-[#7f1d1d]/55 to-[#fecaca]/25" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(254,202,202,0.35),_transparent_55%)]" />
+          <div className="relative flex h-full flex-col justify-end p-5 text-left">
+            <span className="inline-flex w-fit rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/95 ring-1 ring-white/25 backdrop-blur-sm">
               {(item.tipo || "ato").toString()}
+            </span>
+            <p className="font-display mt-3 text-xl font-semibold leading-snug text-white drop-shadow-sm">
+              {item.city || "Brasil"}
             </p>
-            <p className="mt-1 text-sm text-red-800/80">
-              {item.venue || item.city || "Manifestação registrada"}
-            </p>
+            {(item.venue || item.occurred_at) && (
+              <p className="mt-1 line-clamp-2 text-sm text-white/80">
+                {[item.venue, date].filter(Boolean).join(" · ")}
+              </p>
+            )}
           </div>
         </div>
       )}
