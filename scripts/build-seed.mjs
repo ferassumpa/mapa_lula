@@ -8,35 +8,16 @@ const data = JSON.parse(readFileSync(join(root, "scripts", "atos.json"), "utf8")
 const from = new Date("2026-09-21");
 const to = new Date("2026-10-22");
 
-const YOUTUBE_BY_STATE = {
-  SP: ["j4uq0o3YjV0", "wGFJ5ysRD6k", "C5A0NePpCvo", "OxqQUCXsfqU"],
-  BA: ["hRZc6w9_ORo", "C_XgJFtxqzo"],
-  RJ: ["Gb5CcRLJ98s", "C5A0NePpCvo"],
-  DF: ["C5A0NePpCvo", "j4uq0o3YjV0"],
-  MG: ["wGFJ5ysRD6k", "C5A0NePpCvo"],
-  PE: ["Gb5CcRLJ98s", "hRZc6w9_ORo"],
-  PR: ["j4uq0o3YjV0", "wGFJ5ysRD6k"],
-  RS: ["wGFJ5ysRD6k", "Gb5CcRLJ98s"],
-  CE: ["hRZc6w9_ORo", "C_XgJFtxqzo"],
-  PA: ["Gb5CcRLJ98s", "C5A0NePpCvo"],
-  MA: ["C_XgJFtxqzo", "hRZc6w9_ORo"],
-  AL: ["j4uq0o3YjV0"],
-  GO: ["wGFJ5ysRD6k"],
-  AM: ["hRZc6w9_ORo"],
-  SC: ["C5A0NePpCvo", "wGFJ5ysRD6k"],
-  SE: ["C_XgJFtxqzo"],
-  PB: ["Gb5CcRLJ98s"],
-  RN: ["hRZc6w9_ORo"],
-  ES: ["C5A0NePpCvo"],
-  PI: ["C_XgJFtxqzo"],
-  TO: ["wGFJ5ysRD6k"],
-  MT: ["j4uq0o3YjV0"],
-  MS: ["Gb5CcRLJ98s"],
-  AP: ["hRZc6w9_ORo"],
-  RO: ["C5A0NePpCvo"],
-  RR: ["wGFJ5ysRD6k"],
-  AC: ["j4uq0o3YjV0"],
-};
+/** Each YouTube ID is used at most once, on one matching state event. */
+const UNIQUE_VIDEOS = [
+  { youtube_id: "j4uq0o3YjV0", state: "SP", preferCity: "São Paulo" },
+  { youtube_id: "wGFJ5ysRD6k", state: "SP", preferCity: "São Bernardo" },
+  { youtube_id: "C5A0NePpCvo", state: "SP", preferCity: "São Paulo" },
+  { youtube_id: "OxqQUCXsfqU", state: "SP", preferCity: "São Bernardo" },
+  { youtube_id: "hRZc6w9_ORo", state: "BA", preferCity: "Camaçari" },
+  { youtube_id: "C_XgJFtxqzo", state: "BA", preferCity: "Salvador" },
+  { youtube_id: "Gb5CcRLJ98s", state: "RJ", preferCity: "Rio" },
+];
 
 function esc(value) {
   if (value == null || value === "") return "NULL";
@@ -48,10 +29,26 @@ const recent = data.events.filter((e) => {
   return t >= from && t < to;
 });
 
-const rows = recent.map((e, i) => {
-  const pool = YOUTUBE_BY_STATE[e.state] || [];
-  // Attach a known related video to ~1 in 4 events so embeds exist without inventing fake unique clips
-  const youtubeId = pool.length && i % 4 === 0 ? pool[i % pool.length] : null;
+const usedEventIds = new Set();
+const videoByEventId = new Map();
+
+for (const video of UNIQUE_VIDEOS) {
+  const candidates = recent.filter(
+    (e) => e.state === video.state && !usedEventIds.has(e.id),
+  );
+  if (candidates.length === 0) continue;
+
+  const preferred = video.preferCity
+    ? candidates.find((e) =>
+        e.city.toLowerCase().includes(video.preferCity.toLowerCase()),
+      )
+    : null;
+  const chosen = preferred || candidates[0];
+  usedEventIds.add(chosen.id);
+  videoByEventId.set(chosen.id, video.youtube_id);
+}
+
+const rows = recent.map((e) => {
   const tipo = e.tipo || "ato";
   const title = `${tipo.charAt(0).toUpperCase()}${tipo.slice(1)} pró-Lula em ${e.city}`;
   const description =
@@ -66,7 +63,7 @@ const rows = recent.map((e, i) => {
     state_uf: e.state,
     title,
     description,
-    youtube_id: youtubeId,
+    youtube_id: videoByEventId.get(e.id) || null,
     city: e.city,
     occurred_at: e.date,
     source_url: e.url || e.officialUrl,
@@ -93,16 +90,4 @@ ${values};
 
 writeFileSync(join(root, "scripts", "seed-manifestations.sql"), sql);
 console.log(`Wrote ${rows.length} manifestations`);
-console.log(
-  "By state:",
-  Object.entries(
-    rows.reduce((acc, r) => {
-      acc[r.state_uf] = (acc[r.state_uf] || 0) + 1;
-      return acc;
-    }, {}),
-  )
-    .sort((a, b) => b[1] - a[1])
-    .map(([k, v]) => `${k}:${v}`)
-    .join(" "),
-);
-console.log("With youtube:", rows.filter((r) => r.youtube_id).length);
+console.log(`With unique youtube: ${rows.filter((r) => r.youtube_id).length}`);
