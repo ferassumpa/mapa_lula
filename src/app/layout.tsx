@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${sans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#fff5f5] text-red-950" style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}>
-        <header className="border-b border-red-900/10 bg-white/70 backdrop-blur">
+      <body className="min-h-full flex flex-col bg-white text-red-950" style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}>
+        <header className="border-b border-neutral-200 bg-white">
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
             <a href="/" className="font-display text-lg font-bold text-red-900">
               Mapa Lula
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </div>
         </header>
         {children}
-        <footer className="mt-auto border-t border-red-900/10 bg-white/50 px-4 py-4 text-center text-xs text-red-900/50">
+        <footer className="mt-auto border-t border-neutral-200 bg-white px-4 py-4 text-center text-xs text-neutral-500">
           Conteúdo embutido do YouTube. Agregação informativa de vídeos públicos.
         </footer>
       </body>

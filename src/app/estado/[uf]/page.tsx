@@ -18,9 +18,7 @@ export default async function EstadoPage({ params }: Props) {
 
   return (
     <main className="flex flex-1 flex-col">
-      <section className="relative px-4 pb-16 pt-8 sm:px-8">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#fecaca_0%,_transparent_50%),linear-gradient(180deg,#fff5f5_0%,#ffe4e6_100%)]" />
-
+      <section className="relative bg-white px-4 pb-16 pt-8 sm:px-8">
         <div className="relative mx-auto max-w-5xl">
           <Link
             href="/"

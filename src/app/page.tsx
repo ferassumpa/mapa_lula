@@ -11,8 +11,7 @@ export default async function HomePage() {
 
   return (
     <main className="flex flex-1 flex-col">
-      <section className="relative overflow-x-clip px-2 pb-10 pt-10 sm:overflow-visible sm:px-8">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#fecaca_0%,_transparent_55%),linear-gradient(180deg,#fff5f5_0%,#ffe4e6_45%,#fff1f2_100%)]" />
+      <section className="relative overflow-x-clip bg-white px-2 pb-10 pt-10 sm:overflow-visible sm:px-8">
         <div className="relative mx-auto max-w-5xl px-2 text-center sm:px-0">
           <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-red-800/80">
             Brasil · último mês
@@ -40,7 +39,7 @@ export default async function HomePage() {
 
       <section
         id="cadastrar"
-        className="relative border-t border-red-900/10 bg-white/40 px-4 py-12 sm:px-8"
+        className="relative border-t border-neutral-200 bg-white px-4 py-12 sm:px-8"
       >
         <div className="relative mx-auto max-w-xl">
           <h2 className="font-display text-2xl font-bold text-red-950 sm:text-3xl">
@@ -50,7 +49,7 @@ export default async function HomePage() {
             Tem um ato na sua cidade? Informe estado, cidade e data — e, se quiser, um link do
             YouTube ou um PDF. Ele entra no contador do mapa e na lista do estado.
           </p>
-          <div className="mt-6 rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-red-900/10 sm:p-6">
+          <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6">
             <EventForm states={BRAZIL_STATES} />
           </div>
         </div>
