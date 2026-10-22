@@ -2,7 +2,7 @@ import seedManifestations from "@/data/seed-manifestations.json";
 import { supabase } from "./supabase";
 import type { Manifestation, StateRow, StateWithCount } from "./types";
 
-const FALLBACK_STATES: StateRow[] = [
+export const BRAZIL_STATES: StateRow[] = [
   { uf: "AC", name: "Acre", slug: "acre" },
   { uf: "AL", name: "Alagoas", slug: "alagoas" },
   { uf: "AP", name: "Amapá", slug: "amapa" },
@@ -95,14 +95,14 @@ export async function getStatesWithCounts(): Promise<StateWithCount[]> {
     if (!manifestations || manifestations.length === 0) throw new Error("empty");
 
     const { counts, todayUfs } = summarize(manifestations, today);
-    return (states ?? FALLBACK_STATES).map((s) => ({
+    return (states ?? BRAZIL_STATES).map((s) => ({
       ...s,
       count: counts.get(s.uf) ?? 0,
       hasToday: todayUfs.has(s.uf),
     }));
   } catch {
     const { counts, todayUfs } = summarize(seedManifestations, today);
-    return FALLBACK_STATES.map((s) => ({
+    return BRAZIL_STATES.map((s) => ({
       ...s,
       count: counts.get(s.uf) ?? 0,
       hasToday: todayUfs.has(s.uf),
@@ -124,7 +124,7 @@ export async function getStateByUf(uf: string) {
     /* fallback below */
   }
 
-  return FALLBACK_STATES.find((s) => s.uf === uf.toUpperCase()) ?? null;
+  return BRAZIL_STATES.find((s) => s.uf === uf.toUpperCase()) ?? null;
 }
 
 export async function getManifestationsByUf(uf: string): Promise<Manifestation[]> {

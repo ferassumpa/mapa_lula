@@ -1,5 +1,6 @@
 import { BrazilMap } from "@/components/BrazilMap";
-import { getStatesWithCounts } from "@/lib/data";
+import { EventForm } from "@/components/EventForm";
+import { BRAZIL_STATES, getStatesWithCounts } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -35,6 +36,24 @@ export default async function HomePage() {
           Clique em um estado para ver os atos. Fontes: agenda aberta Esquerda nas Ruas / Comitê
           Popular / Hoje tem 13 (CC BY 4.0), com embeds do YouTube quando disponíveis.
         </p>
+      </section>
+
+      <section
+        id="cadastrar"
+        className="relative border-t border-red-900/10 bg-white/40 px-4 py-12 sm:px-8"
+      >
+        <div className="relative mx-auto max-w-xl">
+          <h2 className="font-display text-2xl font-bold text-red-950 sm:text-3xl">
+            Cadastre um evento
+          </h2>
+          <p className="mt-2 text-red-900/75">
+            Tem um ato na sua cidade? Informe estado, cidade e data — ele entra no contador do mapa
+            e na lista do estado.
+          </p>
+          <div className="mt-6 rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-red-900/10 sm:p-6">
+            <EventForm states={BRAZIL_STATES} />
+          </div>
+        </div>
       </section>
     </main>
   );
