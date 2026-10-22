@@ -13,7 +13,7 @@ const sans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "Mapa Lula — Manifestações por estado",
+  title: "A VOZ DO POVO É A VOZ DO LULA",
   description:
     "Mapa do Brasil com manifestações a favor do Lula por estado e vídeos do YouTube.",
 };

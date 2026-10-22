@@ -16,8 +16,8 @@ export default async function HomePage() {
           <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-red-800/80">
             Brasil · último mês
           </p>
-          <h1 className="font-display mt-2 text-4xl font-bold tracking-tight text-red-950 sm:text-5xl">
-            Mapa Lula
+          <h1 className="font-display mt-2 text-3xl font-bold tracking-tight text-red-950 sm:text-5xl">
+            A VOZ DO POVO É A VOZ DO LULA
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-base text-red-900/80 sm:text-lg">
             Estados em verde, divisões em amarelo. Lula pisca para manifestações ocorrendo hoje.
