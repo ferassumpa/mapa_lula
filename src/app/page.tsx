@@ -47,8 +47,8 @@ export default async function HomePage() {
             Cadastre um evento
           </h2>
           <p className="mt-2 text-red-900/75">
-            Tem um ato na sua cidade? Informe estado, cidade e data — ele entra no contador do mapa
-            e na lista do estado.
+            Tem um ato na sua cidade? Informe estado, cidade e data — e, se quiser, um link do
+            YouTube ou um PDF. Ele entra no contador do mapa e na lista do estado.
           </p>
           <div className="mt-6 rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-red-900/10 sm:p-6">
             <EventForm states={BRAZIL_STATES} />

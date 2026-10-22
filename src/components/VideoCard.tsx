@@ -109,7 +109,9 @@ export function VideoCard({ item }: { item: Manifestation }) {
               rel="noopener noreferrer"
               className="text-sm font-medium text-red-700/80 underline-offset-2 hover:underline"
             >
-              Detalhes do ato
+              {/event-pdfs|\.pdf($|\?)/i.test(item.source_url)
+                ? "Abrir PDF"
+                : "Detalhes do ato"}
             </a>
           )}
         </div>
