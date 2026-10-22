@@ -20,7 +20,7 @@ export default async function HomePage() {
             Mapa Lula
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-base text-red-900/80 sm:text-lg">
-            Estados em vermelho claro. Lula pisca para manifestações ocorrendo hoje.
+            Estados em verde, divisões em amarelo. Lula pisca para manifestações ocorrendo hoje.
           </p>
           <p className="mt-4 text-sm font-medium text-red-800">
             {total} manifestações em {withEvents} estados (último mês)

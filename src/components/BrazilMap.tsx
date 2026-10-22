@@ -77,8 +77,8 @@ export function BrazilMap({ states }: Props) {
               }}
               className={
                 hasEvents
-                  ? "fill-[#f87171] stroke-[#7f1d1d] stroke-[0.8] transition hover:fill-[#ef4444] cursor-pointer outline-none"
-                  : "fill-[#fecaca] stroke-[#b91c1c]/70 stroke-[0.8] transition hover:fill-[#fca5a5] cursor-pointer outline-none"
+                  ? "fill-[#16a34a] stroke-[#facc15] stroke-[1.1] transition hover:fill-[#15803d] cursor-pointer outline-none"
+                  : "fill-[#4ade80] stroke-[#fde047] stroke-[1.1] transition hover:fill-[#22c55e] cursor-pointer outline-none"
               }
             >
               <title>
