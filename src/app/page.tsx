@@ -19,9 +19,6 @@ export default async function HomePage() {
           <h1 className="font-display mt-2 text-3xl font-bold tracking-tight text-red-950 sm:text-5xl">
             A VOZ DO POVO É A VOZ DO LULA
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-base text-red-900/80 sm:text-lg">
-            Estados em verde, divisões em amarelo. Lula pisca para manifestações ocorrendo hoje.
-          </p>
           <p className="mt-4 text-sm font-medium text-red-800">
             {total} manifestações em {withEvents} estados (último mês)
           </p>
